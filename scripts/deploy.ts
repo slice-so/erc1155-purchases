@@ -3,8 +3,8 @@ import addresses from "../addresses.json"
 import { ERC1155Purchases } from "../typechain-types/ERC1155Purchases"
 
 // Set these before proceeding
-const env = "testnet"
-const initOwner = "" // The which will operate the contract
+const env = "mainnet"
+const initOwner = "" // The account which will operate the contract
 const slicerId = 1 // The ID of the slicer that will be able to interact with this contract
 
 async function main() {

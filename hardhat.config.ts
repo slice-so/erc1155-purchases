@@ -21,13 +21,13 @@ module.exports = {
     //     mnemonic: process.env.MNEMONIC,
     //   },
     // },
-    // mainnet: {
-    //   url: process.env.URL_MAINNET,
-    //   accounts: {
-    //     mnemonic: process.env.MNEMONIC,
-    //   },
-    //   gasPrice: 40000000000,
-    // },
+    mainnet: {
+      url: process.env.URL_MAINNET,
+      accounts: {
+        mnemonic: process.env.MNEMONIC,
+      },
+      gasPrice: 13000000000,
+    },
   },
   solidity: {
     version: "0.8.13",
