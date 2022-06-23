@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.5.0",
@@ -10,7 +10,7 @@
     "@types/mocha": "^9.1.0",
     "chai": "^4.3.6",
     "dotenv": "^16.0.0",
-    "hardhat": "^2.9.1",
+    "hardhat": "^2.9.9",
     "hardhat-gas-reporter": "^1.0.8",
     "mocha": "^9.2.2",
     "prettier-plugin-solidity": "^1.0.0-beta.19",
@@ -22,7 +22,10 @@
   "dependencies": {
     "@chainlink/contracts": "^0.4.1",
     "@openzeppelin/contracts-upgradeable": "^4.6.0",
+    "@openzeppelin/hardhat-upgrades": "^1.19.0",
     "@paulrberg/contracts": "^3.7.0",
-    "@uniswap/v3-core": "^1.0.1"
+    "@uniswap/v3-core": "^1.0.1",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.32"
   }
 }

@@ -3,6 +3,7 @@ import { TASK_COMPILE_SOLIDITY_GET_SOLC_BUILD } from "hardhat/builtin-tasks/task
 import dotenv from "dotenv"
 import path from "path"
 import "@typechain/hardhat"
+import "@openzeppelin/hardhat-upgrades"
 import "@nomiclabs/hardhat-waffle"
 import "solidity-coverage"
 import "hardhat-gas-reporter"
