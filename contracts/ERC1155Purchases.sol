@@ -24,6 +24,7 @@ contract ERC1155Purchases is SlicerPurchasable, ERC1155Receiver, Ownable {
 
     /**
      * @notice Overridable function containing the requirements for an account to be eligible for the purchase.
+     * Contains both allowlist and token-gate mechanic, which can be enabled using `setTokenToProduct`
      *
      * @dev Used on the Slice interface to check whether a user is able to buy a product. See {ISlicerPurchasable}.
      * @dev Max quantity purchasable per address and total mint amount is handled on Slicer product logic
@@ -48,7 +49,7 @@ contract ERC1155Purchases is SlicerPurchasable, ERC1155Receiver, Ownable {
         }
 
         // If a merkle root has been setup
-        if (_productTokens[productId].merkleRoot != "") {
+        if (isAllowed && _productTokens[productId].merkleRoot != "") {
             // Get Merkle proof from buyerCustomData
             bytes32[] memory proof = abi.decode(buyerCustomData, (bytes32[]));
 
@@ -61,7 +62,9 @@ contract ERC1155Purchases is SlicerPurchasable, ERC1155Receiver, Ownable {
     }
 
     /**
-     * @notice Overridable function to handle external calls on product purchases from slicers. See {ISlicerPurchasable}
+     * @notice Transfers one or more ERC1155 tokens owned by the contract to the buyer `account`.
+     *
+     * @dev Overridable function to handle external calls on product purchases from slicers. See {ISlicerPurchasable}
      */
     function onProductPurchase(
         uint256 slicerId,
@@ -99,9 +102,12 @@ contract ERC1155Purchases is SlicerPurchasable, ERC1155Receiver, Ownable {
     }
 
     /**
-     * @notice Sets a `productId` to execute the transfer of a certain `tokenId`
+     * @notice Sets a `productId` to execute the transfer of a certain `tokenId`, allowing to optionally
+     * add `merkleRoot` to enable allowlist, or `erc20` and `gateAmount` to enable token-gating
+     *
+     * @dev Can only be called by contract owner
      */
-    function setTokenIdToProduct(
+    function setTokenToProduct(
         uint256 productId,
         IERC1155 erc1155,
         uint256[] calldata tokenIds,
@@ -110,6 +116,19 @@ contract ERC1155Purchases is SlicerPurchasable, ERC1155Receiver, Ownable {
         uint256 gateAmount
     ) external onlyOwner {
         _productTokens[productId] = ProductToken(erc1155, tokenIds, merkleRoot, erc20, gateAmount);
+    }
+
+    /**
+     * @notice Sends to owner an `amount` of tokens of `erc1155` contract and `tokenId`.
+     *
+     * @dev Can only be called by contract owner
+     */
+    function withdrawTokens(
+        IERC1155 erc1155,
+        uint256 tokenId,
+        uint256 amount
+    ) external onlyOwner {
+        erc1155.safeTransferFrom(address(this), owner(), tokenId, amount, "");
     }
 
     /**
